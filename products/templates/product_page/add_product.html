@@ -24,7 +24,7 @@ Add Product - Mirpur Mart
                     <div class="mb-3">
                         <label for="productName" class="form-label fw-bold">Product Name:</label>
                         <input type="text" class="form-control" id="productName" placeholder="Enter product name"
-                            name="title" required>
+                            name="name" required>
                     </div>
 
                     <div class="mb-3">
@@ -57,9 +57,12 @@ Add Product - Mirpur Mart
                             placeholder="Enter number of items in stock" name="stock_quantity" required>
                     </div>
 
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="isAvailable" name="is_available" checked>
-                        <label class="form-check-label fw-bold" for="isAvailable">Product is Available</label>
+                    <div class="mb-3">
+                        <label for="isAvailable" class="form-label fw-bold">Product is Available</label>
+                        <select id="isAvailable" name="is_available" class="form-select">
+                            <option value="True" selected>Yes</option>
+                            <option value="False">No</option>
+                        </select>
                     </div>
 
                     <div class="mb-4">
