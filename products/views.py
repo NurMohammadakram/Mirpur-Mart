@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from .models import Product
 from decimal import Decimal, InvalidOperation
 
+
 def home(request):
     return render(request, 'index.html')
+
 
 def add_product(request):
     if request.method == 'POST':
@@ -28,6 +30,8 @@ def add_product(request):
         except (ValueError, TypeError):
             stock_quantity = 0
 
+        image = request.FILES.get('image')
+
         Product.objects.create(
             name=name,
             description=description,
@@ -35,14 +39,18 @@ def add_product(request):
             category=category,
             brand=brand,
             is_available=is_available,
-            stock_quantity=stock_quantity
+            stock_quantity=stock_quantity,
+            image=image,
         )
+
         return redirect('all_products')
+
     return render(request, 'product_page/add_product.html')
+
 
 def all_products(request):
     products = Product.objects.all()
     context = {
-        'products': products
+        'products': products,
     }
     return render(request, 'product_page/all_products.html', context)

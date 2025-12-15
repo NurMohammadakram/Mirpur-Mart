@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils.text import slugify
+
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
@@ -10,12 +10,10 @@ class Product(models.Model):
     brand = models.CharField(max_length=100)
     is_available = models.BooleanField(default=True)
     stock_quantity = models.IntegerField(default=0)
-    
-    
+    image = models.ImageField(upload_to='product/images/', null=True, blank=True)
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
 
     def __str__(self):
         return f'{self.name} - {self.price}' 
