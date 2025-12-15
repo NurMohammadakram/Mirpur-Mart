@@ -61,7 +61,7 @@ All Products - Inventory Management
                     </td>
                     <td>
                         <a href="{% url 'product_details' product.id %}" class="btn btn-sm btn-outline-primary me-1">see Details</a>
-                        <a href="" class="btn btn-sm btn-outline-secondary me-1">Edit</a>
+                        <a href="{% url 'update_product' product.id %}" class="btn btn-sm btn-outline-secondary me-1">update data</a>
                         <a href="" class="btn btn-sm btn-outline-danger">Delete</a>
                     </td>
                 </tr>

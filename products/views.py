@@ -21,9 +21,8 @@ def add_product(request):
         category = request.POST.get('category')
         brand = request.POST.get('brand')
 
-        is_av_raw = request.POST.get('is_available', 'True')
-        is_available = str(is_av_raw).lower() in ('true', '1', 'yes')
-
+        is_available = request.POST.get('is_available', 'True')
+        
         stock_raw = request.POST.get('stock_quantity', '0')
         try:
             stock_quantity = int(stock_raw)
@@ -63,3 +62,47 @@ def product_details(request, product_id):
      
     return render(request, 'product_page/product_details.html', context)
 
+def update_product(request, product_id):
+    productData = get_object_or_404(Product, id=product_id)
+    
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        description = request.POST.get('description')
+
+        price_raw = request.POST.get('price', '0')
+        try:
+            price = Decimal(price_raw)
+        except (InvalidOperation, TypeError):
+            price = Decimal('0.00')
+
+        category = request.POST.get('category')
+        brand = request.POST.get('brand')
+
+        is_available = request.POST.get('is_available', 'True')
+
+        stock_raw = request.POST.get('stock_quantity', '0')
+        try:
+            stock_quantity = int(stock_raw)
+        except (ValueError, TypeError):
+            stock_quantity = 0
+
+        image = request.FILES.get('image')
+
+        productData.name = name
+        productData.description = description
+        productData.price = price
+        productData.category = category
+        productData.brand = brand
+        productData.is_available = is_available
+        productData.stock_quantity = stock_quantity
+        if image:
+            productData.image = image
+
+        productData.save()
+        return redirect('product_details', productData.id)
+    
+    context = {
+        'product': productData,
+    }
+    
+    return render(request, 'product_page/update_product.html', context)
