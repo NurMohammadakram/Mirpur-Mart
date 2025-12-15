@@ -60,7 +60,7 @@ All Products - Inventory Management
                         {% endif %}
                     </td>
                     <td>
-                        <a href="" class="btn btn-sm btn-outline-primary me-1">View</a>
+                        <a href="{% url 'product_details' product.id %}" class="btn btn-sm btn-outline-primary me-1">see Details</a>
                         <a href="" class="btn btn-sm btn-outline-secondary me-1">Edit</a>
                         <a href="" class="btn btn-sm btn-outline-danger">Delete</a>
                     </td>

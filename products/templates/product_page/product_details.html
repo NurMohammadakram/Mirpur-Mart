@@ -1,0 +1,81 @@
+{% extends 'base.html' %} {% block title %} Product Details Inventory - Mirpur
+Mart {% endblock title%} {% block content %}
+<section>
+  <div class="container">
+    <h1 class="text-center">Product details page</h1>
+    <div class="card mx-auto" style="max-width: 800px">
+      {% if product.image %}
+      <img
+        src="{{ product.image.url }}"
+        class="card-img-top"
+        style="
+          width: 100%;
+          height: auto;
+          max-height: 400px;
+          object-fit: contain;
+        "
+        alt="{{ product.name }}"
+      />
+      {% else %}
+      <div class="text-center py-5">
+        <span class="text-muted">No image available</span>
+      </div>
+      {% endif %}
+
+      <div class="card-body">
+        <h5 class="card-title">{{ product.name }}</h5>
+        <p class="card-text text-muted">{{ product.description }}</p>
+        <div class="mb-3">
+          <span class="badge bg-primary">{{ product.category }}</span>
+        </div>
+        <div class="row g-3 mb-3">
+          <div class="col-sm-6">
+            <div class="p-3 bg-light rounded">
+              <small class="text-muted d-block">Price</small>
+              <h4 class="text-primary fw-bold">${{ product.price }}</h4>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="p-3 bg-light rounded">
+              <small class="text-muted d-block">Stock</small>
+              {% if product.is_available %}
+                <h4 class="fw-bold">
+                  {{ product.stock_quantity }} <span class="fs-6">units</span>
+                </h4>
+                <span class="text-success">In Stock</span>
+              {% else %}
+                <h4 class="fw-bold text-danger">0 <span class="fs-6">units</span></h4>
+                <span class="text-danger">Out of Stock</span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="d-grid gap-2">
+          <button class="btn btn-primary" type="button">Add to Cart</button>
+          <button class="btn btn-success" type="button">Order Now</button>
+        </div>
+      </div>
+    </div>
+    <div class="card mx-auto mt-4" style="max-width: 800px">
+      <div class="card-body">
+        <h5 class="card-title">Additional Details</h5>
+        <p class="card-text"><strong>Brand:</strong> {{ product.brand }}</p>
+        <p class="card-text"><strong>SKU:</strong> {{ product.sku }}</p>
+        <p class="card-text">
+          <strong>Weight:</strong> {{ product.weight }} kg
+        </p>
+        <p class="card-text">
+          <strong>Dimensions:</strong> {{ product.dimensions }}
+        </p>
+        <p class="card-text">
+          <strong>Rating:</strong> {{ product.rating }} / 5
+        </p>
+        <p class="card-text">
+          <strong>Reviews:</strong> {{ product.reviews_count }} reviews
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

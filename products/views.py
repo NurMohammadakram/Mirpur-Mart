@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from .models import Product
 from decimal import Decimal, InvalidOperation
 
@@ -49,8 +49,17 @@ def add_product(request):
 
 
 def all_products(request):
-    products = Product.objects.all()
+    productsData = Product.objects.all()
     context = {
-        'products': products,
+        'products': productsData,
     }
     return render(request, 'product_page/all_products.html', context)
+
+def product_details(request, product_id):
+    productData = get_object_or_404(Product, id=product_id)
+    context = {
+        'product': productData,
+    }
+     
+    return render(request, 'product_page/product_details.html', context)
+
