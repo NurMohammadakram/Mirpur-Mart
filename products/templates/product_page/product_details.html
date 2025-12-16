@@ -54,6 +54,13 @@ Mart {% endblock title%} {% block content %}
           <button class="btn btn-primary" type="button">Add to Cart</button>
           <button class="btn btn-success" type="button">Order Now</button>
         </div>
+        <div class="mt-3">
+          <form method="post" action="{% url 'delete_product' product.id %}" style="display:inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Delete this product?');">Delete Product</button>
+          </form>
+          <a href="{% url 'update_product' product.id %}" class="btn btn-outline-secondary ms-2">Update Product</a>
+        </div>
       </div>
     </div>
     <div class="card mx-auto mt-4" style="max-width: 800px">

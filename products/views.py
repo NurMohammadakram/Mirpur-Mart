@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, render, redirect
+from django.db.models import Q
 from .models import Product
 from decimal import Decimal, InvalidOperation
 
@@ -48,14 +49,31 @@ def add_product(request):
 
 
 def all_products(request):
-    productsData = Product.objects.all()
+    query = request.GET.get('query', '').strip()
+    order = request.GET.get('order', '')
+
+    products_qs = Product.objects.filter(is_deleted=False)
+    print(products_qs)
+    if query:
+        products_qs = products_qs.filter(
+            Q(name__icontains=query) | Q(brand__icontains=query) | Q(category__icontains=query)
+        )
+
+    if order == 'asc':
+        products_qs = products_qs.order_by('name')
+    elif order == 'desc':
+        products_qs = products_qs.order_by('-name')
+
     context = {
-        'products': productsData,
+        'products': products_qs,
     }
     return render(request, 'product_page/all_products.html', context)
 
 def product_details(request, product_id):
     productData = get_object_or_404(Product, id=product_id)
+    if productData.is_deleted:
+        return redirect('all_products')
+    
     context = {
         'product': productData,
     }
@@ -106,3 +124,12 @@ def update_product(request, product_id):
     }
     
     return render(request, 'product_page/update_product.html', context)
+
+def delete_product(request, product_id):
+    productData = get_object_or_404(Product, id=product_id, is_deleted=False)
+    if request.method == 'POST':
+        productData.is_deleted = True
+        productData.save()
+        return redirect('all_products')
+
+    return redirect('product_details', product_id)

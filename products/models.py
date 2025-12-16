@@ -11,6 +11,7 @@ class Product(models.Model):
     is_available = models.BooleanField(default=True)
     stock_quantity = models.IntegerField(default=0)
     image = models.ImageField(upload_to='product/images/', null=True, blank=True)
+    is_deleted = models.BooleanField(default=False)
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

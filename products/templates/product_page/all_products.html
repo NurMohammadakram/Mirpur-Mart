@@ -39,32 +39,35 @@ All Products - Inventory Management
             <tbody>
 
                 {% for product in products %}
-                <tr>
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.category|default:"N/A" }}</td>
-                    <td>{{ product.brand|default:"N/A" }}</td>
-                    <td>${{ product.price|floatformat:2 }}</td>
-                    <td>{{ product.stock_quantity }}</td>
-                    <td>
-                        {% if product.is_available %}
-                            <span class="text-success fw-bold">Yes</span>
-                        {% else %}
-                            <span class="text-danger">No</span>
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if product.image %}
-                            <img src="{{ product.image.url }}" alt="{{ product.name }}" width="60" height="60" style="object-fit:cover;border-radius:4px;">
-                        {% else %}
-                            <span class="text-muted small">No image</span>
-                        {% endif %}
-                    </td>
-                    <td>
-                        <a href="{% url 'product_details' product.id %}" class="btn btn-sm btn-outline-primary me-1">see Details</a>
-                        <a href="{% url 'update_product' product.id %}" class="btn btn-sm btn-outline-secondary me-1">update data</a>
-                        <a href="" class="btn btn-sm btn-outline-danger">Delete</a>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.category|default:"N/A" }}</td>
+                        <td>{{ product.brand|default:"N/A" }}</td>
+                        <td>${{ product.price|floatformat:2 }}</td>
+                        <td>{{ product.stock_quantity }}</td>
+                        <td>
+                            {% if product.is_available %}
+                                <span class="text-success fw-bold">Yes</span>
+                            {% else %}
+                                <span class="text-danger">No</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" width="60" height="60" style="object-fit:cover;border-radius:4px;">
+                            {% else %}
+                                <span class="text-muted small">No image</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'product_details' product.id %}" class="btn btn-sm btn-outline-primary me-1">See Details</a>
+                            <a href="{% url 'update_product' product.id %}" class="btn btn-sm btn-outline-secondary me-1">Update</a>
+                            <form method="post" action="{% url 'delete_product' product.id %}" style="display:inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this product?');">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
                 {% empty %}
                 <tr>
                     <td colspan="8" class="text-center py-4">No products found matching your criteria.</td>
