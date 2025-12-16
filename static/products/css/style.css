@@ -1,5 +1,17 @@
 .home-section {
-    height: 600px;
-    background-color: bisque;
+    height: 1200px;
+    background-color: rgb(245, 245, 245);
 }
 
+.nav-link {
+    text-shadow: 1px 1px 4px #585858;
+    font-weight: 600;
+}
+
+.login-btn {
+    background-color: #ff5722;
+    color: white !important;
+    border-radius: 20px;
+    padding: 5px 15px;
+    font-weight: 600;
+}
